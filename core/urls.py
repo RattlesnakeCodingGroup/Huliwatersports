@@ -37,5 +37,6 @@ urlpatterns = [
     path('info/', views.Info, name = 'Info'),
     path('paypal/', views.paypal, name='paypal'),
     path('eraser/',views.eraser, name = 'eraser'),
-    path('success/', views.success, name= 'suxx')
+    path('success/', views.success, name= 'suxx'),
+
 ]

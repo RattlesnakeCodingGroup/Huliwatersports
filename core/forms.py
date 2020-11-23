@@ -2,7 +2,7 @@ from django import forms
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 
-from core.models import Estimate
+from core.models import Estimate, Item
 
 PAYMENT_CHOICES = (
     ('S', 'Stripe'),
@@ -62,7 +62,7 @@ class EstimateForm(forms.ModelForm):
         #     'quantityl': "Default is 0"
         # }
         widgets = {
-            'notes': forms.Textarea(attrs={'rows': 4, 'cols': 100})
+            'notes': forms.Textarea(attrs={'rows': 10, 'cols': 0})
         }
 
 
@@ -87,3 +87,23 @@ class PaymentForm(forms.Form):
     stripeToken = forms.CharField(required=False)
     save = forms.BooleanField(required=False)
     use_default = forms.BooleanField(required=False)
+
+
+class InventoryForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        exclude = ['title', 'price', 'discount_price', 'size', 'category', 'label', 'slug', 'description', 'image',
+                   'back_image', 'label_text'
+                   ]
+
+    def __init__(self, args, kwargs):
+        super().__init__(args, kwargs)
+        bitem = Item.objects.get()
+        for i in bitem:
+            field_name = i.name + " quantity"
+            self.fields[field_name] = forms.IntegerField()
+
+    def get_quantity_fields(self):
+        for field_name in self.fields:
+            yield self[field_name]
+

@@ -43,6 +43,7 @@ class UserProfile(models.Model):
 class Item(models.Model):
     title = models.CharField(max_length=100)
     price = models.FloatField()
+    quantity = models.IntegerField(blank = False, default= 0)
     discount_price = models.FloatField(blank=True, null=True)
     size = models.CharField(choices=SIZES, max_length=1)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
@@ -50,7 +51,7 @@ class Item(models.Model):
     slug = models.SlugField()
     description = models.TextField()
     image = models.ImageField()
-    back_image= models.ImageField(null=True)
+    back_image = models.ImageField(null=True)
     label_text = models.CharField(max_length=10)
 
     def __str__(self):

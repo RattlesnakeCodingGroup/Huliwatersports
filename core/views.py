@@ -15,7 +15,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.views.generic import ListView, DetailView, View, FormView
 
-from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, EstimateForm
+from .forms import CheckoutForm, CouponForm, RefundForm, PaymentForm, EstimateForm, InventoryForm
 from .models import Item, OrderItem, Order, Address, Payment, Coupon, Refund, UserProfile, Estimate
 from django.core.mail import EmailMessage
 
@@ -701,3 +701,4 @@ class RequestRefundView(View):
             except ObjectDoesNotExist:
                 messages.info(self.request, "This order does not exist.")
                 return redirect("core:request-refund")
+
